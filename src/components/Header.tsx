@@ -65,13 +65,15 @@ const Header: React.FC = () => {
             
             {isLoggedIn ? (
               <div className="flex items-center space-x-4">
-                <Link
-                  to="/account"
-                  className="text-gray-700 hover:text-blue-600 transition-colors flex items-center space-x-1"
-                >
-                  <User className="w-4 h-4" />
-                  <span>{user?.name}</span>
-                </Link>
+                {!user?.isAdmin && (
+                  <Link
+                    to="/account"
+                    className="text-gray-700 hover:text-blue-600 transition-colors flex items-center space-x-1"
+                  >
+                    <User className="w-4 h-4" />
+                    <span>{user?.name}</span>
+                  </Link>
+                )}
                 <button
                   onClick={handleLogout}
                   className="text-gray-700 hover:text-red-600 transition-colors"
@@ -139,13 +141,15 @@ const Header: React.FC = () => {
               
               {isLoggedIn ? (
                 <div className="space-y-2">
-                  <Link
-                    to="/account"
-                    className="block text-gray-700 hover:text-blue-600 transition-colors py-2"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    My Account ({user?.name})
-                  </Link>
+                  {!user?.isAdmin && (
+                    <Link
+                      to="/account"
+                      className="block text-gray-700 hover:text-blue-600 transition-colors py-2"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      My Account ({user?.name})
+                    </Link>
+                  )}
                   {user?.isAdmin && (
                     <Link
                       to="/admin"
