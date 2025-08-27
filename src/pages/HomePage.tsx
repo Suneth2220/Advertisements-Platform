@@ -8,16 +8,17 @@ import {
   Calendar,
   TrendingUp,
   Shield,
-  Clock
+  Clock,
+  Wrench
 } from 'lucide-react';
 
 const HomePage: React.FC = () => {
   const categories = [
     {
-  title: 'Marketplace',
+      title: 'Marketplace',
       icon: ShoppingBag,
       description: 'Buy and sell items in your area',
-  link: '/marketplace',
+      link: '/marketplace',
       color: 'from-blue-500 to-blue-600'
     },
     {
@@ -50,7 +51,7 @@ const HomePage: React.FC = () => {
     },
     {
       title: 'Services',
-      icon: Briefcase,
+      icon: Wrench,
       description: 'Browse and offer local services',
       link: '/services',
       color: 'from-teal-500 to-teal-600'
