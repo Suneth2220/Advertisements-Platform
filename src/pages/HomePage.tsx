@@ -6,7 +6,6 @@ import {
   Home, 
   MessageSquare, 
   Calendar,
-  Search,
   TrendingUp,
   Shield,
   Clock
@@ -50,10 +49,10 @@ const HomePage: React.FC = () => {
       color: 'from-pink-500 to-pink-600'
     },
     {
-      title: 'Search',
-      icon: Search,
-      description: 'Find exactly what you need',
-      link: '/search',
+      title: 'Services',
+      icon: Briefcase,
+      description: 'Browse and offer local services',
+      link: '/services',
       color: 'from-teal-500 to-teal-600'
     }
   ];

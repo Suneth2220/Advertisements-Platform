@@ -13,6 +13,7 @@ import PostAdPage from './pages/PostAdPage';
 import AccountPage from './pages/AccountPage';
 import SearchPage from './pages/SearchPage';
 import AboutPage from './pages/AboutPage';
+import ServicesPage from './pages/ServicesPage';
 import AdminPanel from './pages/AdminPanel';
 import { UserProvider } from './context/UserContext';
 
@@ -36,6 +37,7 @@ function App() {
               <Route path="/account" element={<AccountPage />} />
               <Route path="/search" element={<SearchPage />} />
               <Route path="/about" element={<AboutPage />} />
+              <Route path="/services" element={<ServicesPage />} />
               <Route path="/admin" element={<AdminPanel />} />
             </Routes>
           </main>
