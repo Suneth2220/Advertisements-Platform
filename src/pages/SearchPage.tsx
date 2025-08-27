@@ -88,7 +88,7 @@ const SearchPage: React.FC = () => {
 
   const resultTypes = [
     { value: 'all', label: 'All Results' },
-    { value: 'listing', label: 'For Sale' },
+  { value: 'listing', label: 'Marketplace' },
     { value: 'job', label: 'Jobs' },
     { value: 'housing', label: 'Housing' },
     { value: 'event', label: 'Events' }
@@ -268,7 +268,7 @@ const SearchPage: React.FC = () => {
                   />
                   <div className="absolute top-3 left-3">
                     <span className={`px-2 py-1 rounded-full text-xs font-medium ${getTypeColor(result.type)}`}>
-                      {result.type === 'listing' ? 'For Sale' : 
+                      {result.type === 'listing' ? 'Marketplace' : 
                        result.type === 'job' ? 'Job' :
                        result.type === 'housing' ? 'Housing' : 'Event'}
                     </span>
@@ -319,7 +319,7 @@ const SearchPage: React.FC = () => {
                       <div>
                         <div className="flex items-center space-x-2 mb-2">
                           <span className={`px-2 py-1 rounded-full text-xs font-medium ${getTypeColor(result.type)}`}>
-                            {result.type === 'listing' ? 'For Sale' : 
+                            {result.type === 'listing' ? 'Marketplace' : 
                              result.type === 'job' ? 'Job' :
                              result.type === 'housing' ? 'Housing' : 'Event'}
                           </span>

@@ -15,10 +15,10 @@ import {
 const HomePage: React.FC = () => {
   const categories = [
     {
-      title: 'For Sale',
+  title: 'Marketplace',
       icon: ShoppingBag,
       description: 'Buy and sell items in your area',
-      link: '/for-sale',
+  link: '/marketplace',
       color: 'from-blue-500 to-blue-600'
     },
     {
@@ -88,7 +88,7 @@ const HomePage: React.FC = () => {
           </h1>
           <p className="text-xl md:text-2xl mb-8 text-blue-100 max-w-3xl mx-auto">
             The modern way to buy, sell, and connect with your local community.
-            Discover jobs, housing, items for sale, and more.
+            Discover jobs, housing, marketplace items, and more.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
@@ -115,7 +115,7 @@ const HomePage: React.FC = () => {
               Explore Categories
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Find everything you need in one place. From jobs and housing to items for sale.
+              Find everything you need in one place. From jobs and housing to marketplace items.
             </p>
           </div>
 

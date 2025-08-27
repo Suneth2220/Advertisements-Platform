@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import ContactPage from './pages/ContactPage';
-import ForSalePage from './pages/ForSalePage';
+import MarketplacePage from './pages/MarketplacePage';
 import JobsPage from './pages/JobsPage';
 import HousingPage from './pages/HousingPage';
 import ForumsPage from './pages/ForumsPage';
@@ -28,7 +27,7 @@ function App() {
               <Route path="/" element={<HomePage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/contact" element={<ContactPage />} />
-              <Route path="/for-sale" element={<ForSalePage />} />
+              <Route path="/marketplace" element={<MarketplacePage />} />
               <Route path="/jobs" element={<JobsPage />} />
               <Route path="/housing" element={<HousingPage />} />
               <Route path="/forums" element={<ForumsPage />} />

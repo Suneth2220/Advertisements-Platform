@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Filter, Grid, List, Heart, MapPin, Clock } from 'lucide-react';
+import { Search, Grid, List, Heart, MapPin, Clock } from 'lucide-react';
 
 interface ListingItem {
   id: string;
@@ -18,7 +18,6 @@ const MarketplacePage: React.FC = () => {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [sortBy, setSortBy] = useState('newest');
-  const [showFilters, setShowFilters] = useState(false);
 
   // Mock data
   const listings: ListingItem[] = [

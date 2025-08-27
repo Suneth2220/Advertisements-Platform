@@ -17,7 +17,7 @@ const Footer: React.FC = () => {
             </div>
             <p className="text-gray-300 mb-4 max-w-md">
               The modern way to buy, sell, and connect with your local community. 
-              Find everything from jobs and housing to items for sale and local events.
+              Find everything from jobs and housing to marketplace items and local events.
             </p>
             <div className="space-y-2">
               <div className="flex items-center space-x-2 text-gray-300">
@@ -40,8 +40,8 @@ const Footer: React.FC = () => {
             <h3 className="text-lg font-semibold mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/for-sale" className="text-gray-300 hover:text-white transition-colors">
-                  For Sale
+                <Link to="/marketplace" className="text-gray-300 hover:text-white transition-colors">
+                  Marketplace
                 </Link>
               </li>
               <li>

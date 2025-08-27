@@ -21,7 +21,7 @@ const PostAdPage: React.FC = () => {
   const categories = [
     { 
       value: 'for-sale', 
-      label: 'For Sale',
+  label: 'Marketplace',
       subcategories: ['Electronics', 'Furniture', 'Clothing', 'Books', 'Sports', 'Automotive', 'Other']
     },
     { 

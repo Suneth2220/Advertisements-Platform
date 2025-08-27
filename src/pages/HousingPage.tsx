@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, MapPin, Home, DollarSign, Bed, Bath, Square, Heart } from 'lucide-react';
+import { Search, MapPin, Home, Bed, Bath, Square, Heart } from 'lucide-react';
 
 interface Property {
   id: string;
@@ -21,7 +21,6 @@ const HousingPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [propertyType, setPropertyType] = useState('all');
   const [listingType, setListingType] = useState('all');
-  const [priceRange, setPriceRange] = useState('all');
   const [bedrooms, setBedrooms] = useState('all');
 
   // Mock data
@@ -115,7 +114,7 @@ const HousingPage: React.FC = () => {
   const listingTypes = [
     { value: 'all', label: 'Rent & Sale' },
     { value: 'rent', label: 'For Rent' },
-    { value: 'sale', label: 'For Sale' }
+  { value: 'sale', label: 'Marketplace' }
   ];
 
   const bedroomOptions = [
