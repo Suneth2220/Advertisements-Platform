@@ -17,12 +17,16 @@ import ServicesPage from './pages/ServicesPage';
 import AdminPanel from './pages/AdminPanel';
 import { UserProvider } from './context/UserContext';
 
+import ScrollToTop from './components/ScrollToTop';
+
 function App() {
   return (
     <UserProvider>
       <Router>
         <div className="min-h-screen bg-gray-50 flex flex-col">
           <Header />
+          {/* Scroll to top on route change */}
+          <ScrollToTop />
           <main className="flex-1">
             <Routes>
               <Route path="/" element={<HomePage />} />
