@@ -39,9 +39,8 @@ const EventsPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
 
-  // Mock data
-  // Add the bookmark button to each event card where the user can save/toggle
-  const events: Event[] = [
+  // Events state
+  const [events, setEvents] = useState<Event[]>([
     {
       id: '1',
       title: 'Community Farmers Market',
@@ -132,7 +131,24 @@ const EventsPage: React.FC = () => {
       isFeatured: false,
       isAttending: false
     }
-  ];
+  ]);
+
+  // Handler to toggle attendance
+  const handleToggleAttendance = (eventId: string) => {
+    setEvents(prevEvents =>
+      prevEvents.map(ev => {
+        if (ev.id !== eventId) return ev;
+        // If joining, increment attendees; if leaving, decrement
+        if (!ev.isAttending) {
+          // Only allow joining if not full
+          if (ev.maxAttendees && ev.attendees >= ev.maxAttendees) return ev;
+          return { ...ev, isAttending: true, attendees: ev.attendees + 1 };
+        } else {
+          return { ...ev, isAttending: false, attendees: ev.attendees > 0 ? ev.attendees - 1 : 0 };
+        }
+      })
+    );
+  };
 
   const categories = [
     { value: 'all', label: 'All Categories' },
@@ -290,11 +306,19 @@ const EventsPage: React.FC = () => {
                   <button
                     className={`px-4 py-2 rounded-lg font-semibold transition-colors ${
                       event.isAttending
-                        ? 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                        : 'bg-blue-600 text-white hover:bg-blue-700'
+                        ? 'bg-green-500 text-white hover:bg-green-600'
+                        : (event.maxAttendees && event.attendees >= event.maxAttendees)
+                          ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                          : 'bg-blue-600 text-white hover:bg-blue-700'
                     }`}
+                    onClick={() => handleToggleAttendance(event.id)}
+                    disabled={!!event.maxAttendees && event.attendees >= event.maxAttendees && !event.isAttending}
                   >
-                    {event.isAttending ? 'Attending' : 'Join Event'}
+                    {event.isAttending
+                      ? 'Attending'
+                      : (event.maxAttendees && event.attendees >= event.maxAttendees)
+                        ? 'Full'
+                        : 'Join Event'}
                   </button>
                 </div>
               </div>
