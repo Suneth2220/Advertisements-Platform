@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Search, Grid, List, Heart, MapPin, Clock } from 'lucide-react';
+import { Search, Grid, List, Bookmark, MapPin, Clock } from 'lucide-react';
+import { useBookmarks } from '../context/BookmarkContext';
 
 interface ListingItem {
   id: string;
@@ -14,6 +15,11 @@ interface ListingItem {
 }
 
 const MarketplacePage: React.FC = () => {
+  const { isBookmarked, addBookmark, removeBookmark } = useBookmarks();
+  const handleToggleBookmark = (item: ListingItem) => {
+    if (isBookmarked(item.id)) removeBookmark(item.id);
+    else addBookmark(item);
+  };
   const [searchQuery, setSearchQuery] = useState('');
   const [locationQuery, setLocationQuery] = useState('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -21,7 +27,7 @@ const MarketplacePage: React.FC = () => {
   const [sortBy, setSortBy] = useState('newest');
 
   // Mock data
-  const listings: ListingItem[] = [
+  const [listings, setListings] = useState<ListingItem[]>([
     {
       id: '1',
       title: 'iPhone 14 Pro Max - Excellent Condition',
@@ -88,7 +94,11 @@ const MarketplacePage: React.FC = () => {
       postedDate: '1 week ago',
       isFavorite: false
     }
-  ];
+  ]);
+  // Toggle favorite handler
+  const handleToggleFavorite = (id: string) => {
+    setListings(prev => prev.map(l => l.id === id ? { ...l, isFavorite: !l.isFavorite } : l));
+  };
 
   const categories = [
     { value: 'all', label: 'All Categories' },
@@ -204,8 +214,12 @@ const MarketplacePage: React.FC = () => {
                     alt={listing.title}
                     className="w-full h-48 object-cover"
                   />
-                  <button className="absolute top-3 right-3 p-2 bg-white rounded-full shadow-md hover:bg-gray-50 transition-colors">
-                    <Heart className={`w-5 h-5 ${listing.isFavorite ? 'text-red-500 fill-current' : 'text-gray-400'}`} />
+                  <button
+                    className="absolute top-3 right-3 p-2 bg-white rounded-full shadow-md hover:bg-gray-50 transition-colors"
+                    onClick={() => handleToggleBookmark(listing)}
+                    aria-label={isBookmarked(listing.id) ? 'Remove bookmark' : 'Add bookmark'}
+                  >
+                    <Bookmark className={`w-5 h-5 ${isBookmarked(listing.id) ? 'text-blue-600 fill-current' : 'text-gray-400'}`} />
                   </button>
                   <div className="absolute bottom-3 left-3 bg-black bg-opacity-70 text-white px-2 py-1 rounded text-sm font-semibold">
                     ${listing.price.toLocaleString()}
@@ -239,8 +253,12 @@ const MarketplacePage: React.FC = () => {
                       alt={listing.title}
                       className="w-full h-32 object-cover"
                     />
-                    <button className="absolute top-2 right-2 p-1.5 bg-white rounded-full shadow-md hover:bg-gray-50 transition-colors">
-                      <Heart className={`w-4 h-4 ${listing.isFavorite ? 'text-red-500 fill-current' : 'text-gray-400'}`} />
+                    <button
+                      className="absolute top-2 right-2 p-1.5 bg-white rounded-full shadow-md hover:bg-gray-50 transition-colors"
+                      onClick={() => handleToggleFavorite(listing.id)}
+                      aria-label={listing.isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+                    >
+                      <Bookmark className={`w-4 h-4 ${isBookmarked(listing.id) ? 'text-blue-600 fill-current' : 'text-gray-400'}`} />
                     </button>
                   </div>
                   <div className="flex-1 p-4">

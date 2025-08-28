@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useBookmarks } from '../context/BookmarkContext';
 import { Search, MapPin, Clock, DollarSign, Briefcase, Filter, Bookmark } from 'lucide-react';
 
 interface Job {
@@ -15,6 +16,7 @@ interface Job {
 }
 
 const JobsPage: React.FC = () => {
+  const { isBookmarked, addBookmark, removeBookmark } = useBookmarks();
   const [searchQuery, setSearchQuery] = useState('');
   const [locationFilter, setLocationFilter] = useState('');
   const [jobTypeFilter, setJobTypeFilter] = useState('all');
@@ -187,8 +189,27 @@ const JobsPage: React.FC = () => {
                 <div className="flex-1">
                   <div className="flex items-start justify-between mb-2">
                     <h3 className="text-xl font-bold text-gray-900">{job.title}</h3>
-                    <button className="ml-4 p-2 hover:bg-gray-50 rounded-full transition-colors">
-                      <Bookmark className={`w-5 h-5 ${job.isBookmarked ? 'text-blue-600 fill-current' : 'text-gray-400'}`} />
+                    <button
+                      className="ml-4 p-2 hover:bg-gray-50 rounded-full transition-colors"
+                      aria-label={isBookmarked(job.id) ? 'Remove bookmark' : 'Add bookmark'}
+                      onClick={() => {
+                        if (isBookmarked(job.id)) {
+                          removeBookmark(job.id);
+                        } else {
+                          addBookmark({
+                            id: job.id,
+                            title: job.title,
+                            price: 0,
+                            location: job.location,
+                            image: '',
+                            description: job.description,
+                            category: 'job',
+                            postedDate: job.postedDate,
+                          });
+                        }
+                      }}
+                    >
+                      <Bookmark className={`w-5 h-5 ${isBookmarked(job.id) ? 'text-blue-600 fill-current' : 'text-gray-400'}`} />
                     </button>
                   </div>
                   <p className="text-lg font-semibold text-gray-700 mb-2">{job.company}</p>

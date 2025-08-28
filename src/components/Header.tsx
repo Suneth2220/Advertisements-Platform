@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Search, Menu, X, User, Plus } from 'lucide-react';
+import { Bookmark } from 'lucide-react';
+import { useBookmarks } from '../context/BookmarkContext';
 import { useUser } from '../context/UserContext';
 
 const Header: React.FC = () => {
+  const { bookmarks } = useBookmarks();
+  const [showBookmarks, setShowBookmarks] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const { user, logout, isLoggedIn } = useUser();
@@ -55,6 +59,35 @@ const Header: React.FC = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-6">
+            <div className="relative">
+              <button
+                className="p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors"
+                onClick={() => setShowBookmarks((prev) => !prev)}
+                aria-label="Show bookmarks"
+              >
+                <Bookmark className="w-6 h-6" />
+              </button>
+              {showBookmarks && (
+                <div className="absolute right-0 mt-2 w-80 bg-white shadow-lg rounded-lg z-50 border border-gray-200">
+                  <div className="p-4 font-bold text-gray-700 border-b">Saved Items</div>
+                  {bookmarks.length === 0 ? (
+                    <div className="p-4 text-gray-500">No items bookmarked.</div>
+                  ) : (
+                    <ul className="max-h-96 overflow-y-auto">
+                      {bookmarks.map(item => (
+                        <li key={item.id} className="flex items-center gap-3 p-3 border-b last:border-b-0">
+                          <img src={item.image} alt={item.title} className="w-12 h-12 object-cover rounded-md" />
+                          <div className="flex-1">
+                            <div className="font-semibold text-gray-900 text-sm">{item.title}</div>
+                            <div className="text-xs text-gray-500">{item.location} &bull; ${item.price.toLocaleString()}</div>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              )}
+            </div>
             <Link
               to="/post-ad"
               className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"

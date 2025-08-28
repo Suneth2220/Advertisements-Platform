@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Briefcase, MapPin, Clock, Heart, Grid, List } from 'lucide-react';
+import { Briefcase, MapPin, Clock, Bookmark, Grid, List } from 'lucide-react';
+import { useBookmarks } from '../context/BookmarkContext';
 
 interface ServiceItem {
   id: string;
@@ -100,12 +101,33 @@ const categories = [
 ];
 
 const ServicesPage: React.FC = () => {
+  const { isBookmarked, addBookmark, removeBookmark } = useBookmarks();
+  const handleToggleBookmark = (service: ServiceItem) => {
+    if (isBookmarked(service.id)) removeBookmark(service.id);
+    else addBookmark({
+      id: service.id,
+      title: service.title,
+      price: service.price,
+      location: service.location,
+      image: service.image,
+      description: service.description,
+      category: service.category,
+      postedDate: service.postedDate
+    });
+  };
   const [searchQuery, setSearchQuery] = useState('');
   const [locationQuery, setLocationQuery] = useState('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [selectedCategory, setSelectedCategory] = useState('all');
 
-  const filteredServices = mockServices.filter(service => {
+  const [services, setServices] = useState<ServiceItem[]>(mockServices);
+
+  // Toggle favorite handler
+  const handleToggleFavorite = (id: string) => {
+    setServices(prev => prev.map(s => s.id === id ? { ...s, isFavorite: !s.isFavorite } : s));
+  };
+
+  const filteredServices = services.filter(service => {
     const matchesSearch = service.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       service.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
       service.provider.toLowerCase().includes(searchQuery.toLowerCase());
@@ -197,8 +219,12 @@ const ServicesPage: React.FC = () => {
                     alt={service.title}
                     className="w-full h-48 object-cover"
                   />
-                  <button className="absolute top-3 right-3 p-2 bg-white rounded-full shadow-md hover:bg-gray-50 transition-colors">
-                    <Heart className={`w-5 h-5 ${service.isFavorite ? 'text-red-500 fill-current' : 'text-gray-400'}`} />
+                  <button
+                    className="absolute top-3 right-3 p-2 bg-white rounded-full shadow-md hover:bg-gray-50 transition-colors"
+                    onClick={() => handleToggleBookmark(service)}
+                    aria-label={isBookmarked(service.id) ? 'Remove bookmark' : 'Add bookmark'}
+                  >
+                    <Bookmark className={`w-5 h-5 ${isBookmarked(service.id) ? 'text-blue-600 fill-current' : 'text-gray-400'}`} />
                   </button>
                   <div className="absolute bottom-3 left-3 bg-black bg-opacity-70 text-white px-2 py-1 rounded text-sm font-semibold">
                     {service.price}
@@ -234,7 +260,13 @@ const ServicesPage: React.FC = () => {
                       className="w-full h-32 object-cover"
                     />
                     <button className="absolute top-2 right-2 p-1.5 bg-white rounded-full shadow-md hover:bg-gray-50 transition-colors">
-                      <Heart className={`w-4 h-4 ${service.isFavorite ? 'text-red-500 fill-current' : 'text-gray-400'}`} />
+                      <button
+                        className="absolute top-2 right-2 p-1.5 bg-white rounded-full shadow-md hover:bg-gray-50 transition-colors"
+                        onClick={() => handleToggleFavorite(service.id)}
+                        aria-label={service.isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+                      >
+                        <Heart className={`w-4 h-4 ${service.isFavorite ? 'text-red-500 fill-current' : 'text-gray-400'}`} />
+                      </button>
                     </button>
                   </div>
                   <div className="flex-1 p-4">

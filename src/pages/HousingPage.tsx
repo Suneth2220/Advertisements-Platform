@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Search, MapPin, Home, Bed, Bath, Square, Heart } from 'lucide-react';
+import { Search, MapPin, Home, Bed, Bath, Square, Bookmark } from 'lucide-react';
+import { useBookmarks } from '../context/BookmarkContext';
 
 interface Property {
   id: string;
@@ -18,13 +19,27 @@ interface Property {
 }
 
 const HousingPage: React.FC = () => {
+  const { isBookmarked, addBookmark, removeBookmark } = useBookmarks();
+  const handleToggleBookmark = (property: Property) => {
+    if (isBookmarked(property.id)) removeBookmark(property.id);
+    else addBookmark({
+      id: property.id,
+      title: property.title,
+      price: property.price,
+      location: property.location,
+      image: property.image,
+      description: property.description,
+      category: property.propertyType,
+      postedDate: property.postedDate
+    });
+  };
   const [searchQuery, setSearchQuery] = useState('');
   const [propertyType, setPropertyType] = useState('all');
   const [listingType, setListingType] = useState('all');
   const [bedrooms, setBedrooms] = useState('all');
 
   // Mock data
-  const properties: Property[] = [
+  const [properties, setProperties] = useState<Property[]>([
     {
       id: '1',
       title: 'Luxury Downtown Apartment',
@@ -100,7 +115,11 @@ const HousingPage: React.FC = () => {
       postedDate: '1 week ago',
       isFavorite: true
     }
-  ];
+  ]);
+  // Toggle favorite handler
+  const handleToggleFavorite = (id: string) => {
+    setProperties(prev => prev.map(p => p.id === id ? { ...p, isFavorite: !p.isFavorite } : p));
+  };
 
   const propertyTypes = [
     { value: 'all', label: 'All Types' },
@@ -217,8 +236,12 @@ const HousingPage: React.FC = () => {
                   alt={property.title}
                   className="w-full h-48 object-cover"
                 />
-                <button className="absolute top-3 right-3 p-2 bg-white rounded-full shadow-md hover:bg-gray-50 transition-colors">
-                  <Heart className={`w-5 h-5 ${property.isFavorite ? 'text-red-500 fill-current' : 'text-gray-400'}`} />
+                <button
+                  className="absolute top-3 right-3 p-2 bg-white rounded-full shadow-md hover:bg-gray-50 transition-colors"
+                  onClick={() => handleToggleBookmark(property)}
+                  aria-label={isBookmarked(property.id) ? 'Remove bookmark' : 'Add bookmark'}
+                >
+                  <Bookmark className={`w-5 h-5 ${isBookmarked(property.id) ? 'text-blue-600 fill-current' : 'text-gray-400'}`} />
                 </button>
                 <div className="absolute top-3 left-3">
                   <span className={`px-3 py-1 rounded-full text-sm font-semibold ${

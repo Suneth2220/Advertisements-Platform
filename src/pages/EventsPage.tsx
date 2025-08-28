@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Calendar, MapPin, Clock, Users, Star, Search } from 'lucide-react';
+import { Calendar, MapPin, Clock, Users, Star, Search, Bookmark } from 'lucide-react';
+import { useBookmarks } from '../context/BookmarkContext';
 import { format } from 'date-fns';
 
 interface Event {
@@ -19,12 +20,27 @@ interface Event {
 }
 
 const EventsPage: React.FC = () => {
+  const { isBookmarked, addBookmark, removeBookmark } = useBookmarks();
+  const handleToggleBookmark = (event: Event) => {
+    if (isBookmarked(event.id)) removeBookmark(event.id);
+    else addBookmark({
+      id: event.id,
+      title: event.title,
+      price: 0,
+      location: event.location,
+      image: event.image,
+      description: event.description,
+      category: event.category,
+      postedDate: event.date
+    });
+  };
   const [searchQuery, setSearchQuery] = useState('');
   const [locationQuery, setLocationQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
 
   // Mock data
+  // Add the bookmark button to each event card where the user can save/toggle
   const events: Event[] = [
     {
       id: '1',
@@ -229,13 +245,13 @@ const EventsPage: React.FC = () => {
                     </span>
                   </div>
                 )}
-                {event.isAttending && (
-                  <div className="absolute top-3 right-3">
-                    <span className="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
-                      Attending
-                    </span>
-                  </div>
-                )}
+                <button
+                  className="absolute top-3 right-3 p-2 bg-white rounded-full shadow-md hover:bg-gray-50 transition-colors"
+                  onClick={() => handleToggleBookmark(event)}
+                  aria-label={isBookmarked(event.id) ? 'Remove bookmark' : 'Add bookmark'}
+                >
+                  <Bookmark className={`w-5 h-5 ${isBookmarked(event.id) ? 'text-blue-600 fill-current' : 'text-gray-400'}`} />
+                </button>
               </div>
 
               <div className="p-6">
