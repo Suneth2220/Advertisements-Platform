@@ -1,3 +1,5 @@
+
+
 import React, { useState } from 'react';
 import { Search, Grid, List, Bookmark, MapPin, Clock } from 'lucide-react';
 import { useBookmarks } from '../context/BookmarkContext';
@@ -95,12 +97,182 @@ const MarketplacePage: React.FC = () => {
       category: 'sports',
       postedDate: '1 week ago',
       isFavorite: false
+    },
+    // 15 more ads
+    {
+      id: '7',
+      title: 'Samsung 55" 4K Smart TV',
+      price: 650,
+      location: 'Tech District',
+      image: 'https://images.pexels.com/photos/439227/pexels-photo-439227.jpeg',
+      description: 'Crystal clear 4K UHD TV, almost new, with remote and wall mount.',
+      category: 'electronics',
+      postedDate: '3 hours ago',
+      isFavorite: false
+    },
+    {
+      id: '8',
+      title: 'Leather Recliner Chair',
+      price: 300,
+      location: 'Uptown',
+      image: 'https://images.pexels.com/photos/276528/pexels-photo-276528.jpeg',
+      description: 'Comfy leather recliner, perfect for home theater or living room.',
+      category: 'furniture',
+      postedDate: '6 hours ago',
+      isFavorite: false
+    },
+    {
+      id: '9',
+      title: 'Gaming Laptop - RTX 3070',
+      price: 1700,
+      location: 'City Center',
+      image: 'https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg',
+      description: 'High-end gaming laptop, 16GB RAM, 1TB SSD, RTX 3070 graphics.',
+      category: 'electronics',
+      postedDate: '1 hour ago',
+      isFavorite: false
+    },
+    {
+      id: '10',
+      title: 'Dining Table with 8 Chairs',
+      price: 950,
+      location: 'West End',
+      image: 'https://images.pexels.com/photos/1866149/pexels-photo-1866149.jpeg',
+      description: 'Large wooden dining table, includes 8 matching chairs.',
+      category: 'furniture',
+      postedDate: '2 days ago',
+      isFavorite: false
+    },
+    {
+      id: '11',
+      title: 'Used MacBook Pro 2020',
+      price: 1100,
+      location: 'Downtown',
+      image: 'https://images.pexels.com/photos/18105/pexels-photo.jpg',
+      description: 'MacBook Pro 13", M1 chip, 256GB SSD, excellent battery.',
+      category: 'electronics',
+      postedDate: '7 hours ago',
+      isFavorite: false
+    },
+    {
+      id: '12',
+      title: 'Toyota Prius Hybrid 2017',
+      price: 14500,
+      location: 'North Side',
+      image: 'https://images.pexels.com/photos/358070/pexels-photo-358070.jpeg',
+      description: 'Fuel efficient, well maintained, low mileage, one owner.',
+      category: 'vehicles',
+      postedDate: '3 days ago',
+      isFavorite: false
+    },
+    {
+      id: '13',
+      title: 'Brand New Microwave Oven',
+      price: 120,
+      location: 'Suburb Area',
+      image: 'https://images.pexels.com/photos/1599791/pexels-photo-1599791.jpeg',
+      description: 'Still in box, never used, 1-year warranty included.',
+      category: 'electronics',
+      postedDate: '1 day ago',
+      isFavorite: false
+    },
+    {
+      id: '14',
+      title: 'Queen Size Bed Frame',
+      price: 400,
+      location: 'East Side',
+      image: 'https://images.pexels.com/photos/271618/pexels-photo-271618.jpeg',
+      description: 'Sturdy metal frame, easy assembly, fits queen mattress.',
+      category: 'furniture',
+      postedDate: '5 days ago',
+      isFavorite: false
+    },
+    {
+      id: '15',
+      title: 'Apple Watch Series 7',
+      price: 350,
+      location: 'Tech District',
+      image: 'https://images.pexels.com/photos/267394/pexels-photo-267394.jpeg',
+      description: 'Latest Apple Watch, GPS, 44mm, green band, like new.',
+      category: 'electronics',
+      postedDate: '8 hours ago',
+      isFavorite: false
+    },
+    {
+      id: '16',
+      title: 'Electric Scooter',
+      price: 500,
+      location: 'City Center',
+      image: 'https://images.pexels.com/photos/2265481/pexels-photo-2265481.jpeg',
+      description: 'Foldable, 25km range, charger included, great for commuting.',
+      category: 'vehicles',
+      postedDate: '2 days ago',
+      isFavorite: false
+    },
+    {
+      id: '17',
+      title: 'Bookshelf - 5 Shelves',
+      price: 90,
+      location: 'Uptown',
+      image: 'https://images.pexels.com/photos/159711/books-bookshelf-read-old-books-159711.jpeg',
+      description: 'Tall bookshelf, dark wood, fits lots of books or decor.',
+      category: 'furniture',
+      postedDate: '6 days ago',
+      isFavorite: false
+    },
+    {
+      id: '18',
+      title: 'Canon Mirrorless Camera',
+      price: 600,
+      location: 'Tech District',
+      image: 'https://images.pexels.com/photos/51383/camera-lens-dslr-slr-51383.jpeg',
+      description: 'Canon EOS M50, 15-45mm lens, WiFi, vlogging ready.',
+      category: 'electronics',
+      postedDate: '4 hours ago',
+      isFavorite: false
+    },
+    {
+      id: '19',
+      title: 'Honda Activa Scooter',
+      price: 800,
+      location: 'North Side',
+      image: 'https://images.pexels.com/photos/46148/pexels-photo-46148.jpeg',
+      description: '2019 model, low mileage, well maintained, single owner.',
+      category: 'vehicles',
+      postedDate: '1 week ago',
+      isFavorite: false
+    },
+    {
+      id: '20',
+      title: 'Samsung Galaxy S22 Ultra',
+      price: 999,
+      location: 'Downtown',
+      image: 'https://images.pexels.com/photos/404280/pexels-photo-404280.jpeg',
+      description: 'Flagship phone, 256GB, 108MP camera, S-Pen, pristine condition.',
+      category: 'electronics',
+      postedDate: '2 hours ago',
+      isFavorite: false
+    },
+    {
+      id: '21',
+      title: 'Sofa Bed - Convertible',
+      price: 350,
+      location: 'Suburb Area',
+      image: 'https://images.pexels.com/photos/276528/pexels-photo-276528.jpeg',
+      description: 'Space-saving sofa bed, easy to convert, gray fabric.',
+      category: 'furniture',
+      postedDate: '3 days ago',
+      isFavorite: false
     }
   ]);
   // Toggle favorite handler
   const handleToggleFavorite = (id: string) => {
     setListings(prev => prev.map(l => l.id === id ? { ...l, isFavorite: !l.isFavorite } : l));
   };
+
+  // Pagination state and logic (must be after filteredListings is defined)
+  const [currentPage, setCurrentPage] = useState(1);
+  const adsPerPage = 15;
 
   const categories = [
     { value: 'all', label: 'All Categories' },
@@ -113,6 +285,7 @@ const MarketplacePage: React.FC = () => {
     { value: 'other', label: 'Other' }
   ];
 
+
   const filteredListings = listings.filter(listing => {
     const matchesSearch = listing.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       listing.description.toLowerCase().includes(searchQuery.toLowerCase());
@@ -120,6 +293,9 @@ const MarketplacePage: React.FC = () => {
     const matchesLocation = !locationQuery || listing.location.toLowerCase().includes(locationQuery.toLowerCase());
     return matchesSearch && matchesCategory && matchesLocation;
   });
+
+  const totalPages = Math.ceil(filteredListings.length / adsPerPage);
+  const paginatedListings: ListingItem[] = filteredListings.slice((currentPage - 1) * adsPerPage, currentPage * adsPerPage);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -208,7 +384,7 @@ const MarketplacePage: React.FC = () => {
         {/* Listings Grid/List */}
         {viewMode === 'grid' ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredListings.map((listing) => (
+            {paginatedListings.map((listing) => (
               <div
                 key={listing.id}
                 className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow cursor-pointer"
@@ -253,7 +429,7 @@ const MarketplacePage: React.FC = () => {
           </div>
         ) : (
           <div className="space-y-4">
-            {filteredListings.map((listing) => (
+            {paginatedListings.map((listing) => (
               <div key={listing.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
                 <div className="flex">
                   <div className="relative w-64 flex-shrink-0">
@@ -295,6 +471,40 @@ const MarketplacePage: React.FC = () => {
                 </div>
               </div>
             ))}
+          </div>
+        )}
+        {/* Pagination Navigator */}
+        {totalPages > 1 && (
+          <div className="flex justify-center items-center mt-8 space-x-2 select-none">
+            {/* Previous */}
+            <button
+              className={`px-2 py-1 flex items-center rounded ${currentPage === 1 ? 'text-gray-400 cursor-not-allowed' : 'text-blue-600 hover:bg-blue-50'}`}
+              onClick={() => currentPage > 1 && setCurrentPage(currentPage - 1)}
+              disabled={currentPage === 1}
+              style={{ textDecoration: 'none' }}
+            >
+              &lt; Previous
+            </button>
+            {/* Page Numbers */}
+            {Array.from({ length: Math.min(5, totalPages) }, (_, i) => i + 1).map(pageNum => (
+              <button
+                key={pageNum}
+                className={`px-2 py-1 ${currentPage === pageNum ? 'font-bold text-black' : 'text-gray-500 hover:underline'}`}
+                onClick={() => setCurrentPage(pageNum)}
+              >
+                {pageNum}
+              </button>
+            ))}
+            {totalPages > 5 && <span className="px-2">...</span>}
+            {/* Next */}
+            <button
+              className={`px-2 py-1 flex items-center rounded ${currentPage === totalPages ? 'text-gray-400 cursor-not-allowed' : 'text-blue-600 hover:bg-blue-50'}`}
+              onClick={() => currentPage < totalPages && setCurrentPage(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              style={{ textDecoration: 'none' }}
+            >
+              Next &gt;
+            </button>
           </div>
         )}
 
