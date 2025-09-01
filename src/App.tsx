@@ -1,5 +1,8 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ProductDetailPage from './pages/ProductDetailPage';
+import HouseDetailPage from './pages/HouseDetailPage';
+import ServicesDetailPage from './pages/ServicesDetailPage';
+import EventsDetailPage from './pages/EventsDetailPage';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
@@ -45,6 +48,9 @@ function App() {
               <Route path="/services" element={<ServicesPage />} />
               <Route path="/admin" element={<AdminPanel />} />
               <Route path="/product/:id" element={<ProductDetailPage />} />
+              <Route path="/house/:id" element={<HouseDetailPage />} />
+              <Route path="/services/:id" element={<ServicesDetailPage />} />
+              <Route path="/events/:id" element={<EventsDetailPage />} />
             </Routes>
           </main>
           <Footer />

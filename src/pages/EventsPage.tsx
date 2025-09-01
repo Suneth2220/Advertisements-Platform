@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Calendar, MapPin, Clock, Users, Star, Search, Bookmark } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { useBookmarks } from '../context/BookmarkContext';
 import { format } from 'date-fns';
 
@@ -21,6 +22,7 @@ interface Event {
 
 const EventsPage: React.FC = () => {
   const { isBookmarked, addBookmark, removeBookmark } = useBookmarks();
+  const navigate = useNavigate();
   const handleToggleBookmark = (event: Event) => {
     if (isBookmarked(event.id)) removeBookmark(event.id);
     else addBookmark({
@@ -246,7 +248,14 @@ const EventsPage: React.FC = () => {
         {/* Events Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {sortedEvents.map((event) => (
-            <div key={event.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+            <div
+              key={event.id}
+              role="button"
+              tabIndex={0}
+              onClick={() => navigate(`/events/${event.id}`, { state: { product: event } })}
+              onKeyDown={(e) => { if (e.key === 'Enter') navigate(`/events/${event.id}`, { state: { product: event } }); }}
+              className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow cursor-pointer"
+            >
               <div className="relative">
                 <img
                   src={event.image}
@@ -263,7 +272,7 @@ const EventsPage: React.FC = () => {
                 )}
                 <button
                   className="absolute top-3 right-3 p-2 bg-white rounded-full shadow-md hover:bg-gray-50 transition-colors"
-                  onClick={() => handleToggleBookmark(event)}
+                  onClick={(e) => { e.stopPropagation(); handleToggleBookmark(event); }}
                   aria-label={isBookmarked(event.id) ? 'Remove bookmark' : 'Add bookmark'}
                 >
                   <Bookmark className={`w-5 h-5 ${isBookmarked(event.id) ? 'text-blue-600 fill-current' : 'text-gray-400'}`} />

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Briefcase, MapPin, Clock, Bookmark, Grid, List } from 'lucide-react';
+import { Briefcase, MapPin, Clock, Bookmark, Grid, List, Heart } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { useBookmarks } from '../context/BookmarkContext';
 
 interface ServiceItem {
@@ -102,18 +103,23 @@ const categories = [
 
 const ServicesPage: React.FC = () => {
   const { isBookmarked, addBookmark, removeBookmark } = useBookmarks();
+  const navigate = useNavigate();
   const handleToggleBookmark = (service: ServiceItem) => {
     if (isBookmarked(service.id)) removeBookmark(service.id);
-    else addBookmark({
-      id: service.id,
-      title: service.title,
-      price: service.price,
-      location: service.location,
-      image: service.image,
-      description: service.description,
-      category: service.category,
-      postedDate: service.postedDate
-    });
+    else {
+      // attempt to extract numeric price, fallback to 0
+      const numericPrice = Number((service.price || '').toString().replace(/[^0-9.]/g, '')) || 0;
+      addBookmark({
+        id: service.id,
+        title: service.title,
+        price: numericPrice,
+        location: service.location,
+        image: service.image,
+        description: service.description,
+        category: service.category,
+        postedDate: service.postedDate
+      });
+    }
   };
   const [searchQuery, setSearchQuery] = useState('');
   const [locationQuery, setLocationQuery] = useState('');
@@ -212,7 +218,14 @@ const ServicesPage: React.FC = () => {
         {viewMode === 'grid' ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredServices.map((service) => (
-              <div key={service.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+              <div
+                key={service.id}
+                role="button"
+                tabIndex={0}
+                onClick={() => navigate(`/services/${service.id}`, { state: { product: service } })}
+                onKeyDown={(e) => { if (e.key === 'Enter') navigate(`/services/${service.id}`, { state: { product: service } }); }}
+                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow cursor-pointer"
+              >
                 <div className="relative">
                   <img
                     src={service.image}
@@ -221,7 +234,7 @@ const ServicesPage: React.FC = () => {
                   />
                   <button
                     className="absolute top-3 right-3 p-2 bg-white rounded-full shadow-md hover:bg-gray-50 transition-colors"
-                    onClick={() => handleToggleBookmark(service)}
+                    onClick={(e) => { e.stopPropagation(); handleToggleBookmark(service); }}
                     aria-label={isBookmarked(service.id) ? 'Remove bookmark' : 'Add bookmark'}
                   >
                     <Bookmark className={`w-5 h-5 ${isBookmarked(service.id) ? 'text-blue-600 fill-current' : 'text-gray-400'}`} />
@@ -251,7 +264,14 @@ const ServicesPage: React.FC = () => {
         ) : (
           <div className="space-y-4">
             {filteredServices.map((service) => (
-              <div key={service.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+              <div
+                key={service.id}
+                role="button"
+                tabIndex={0}
+                onClick={() => navigate(`/services/${service.id}`, { state: { product: service } })}
+                onKeyDown={(e) => { if (e.key === 'Enter') navigate(`/services/${service.id}`, { state: { product: service } }); }}
+                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow cursor-pointer"
+              >
                 <div className="flex">
                   <div className="relative w-64 flex-shrink-0">
                     <img
@@ -259,14 +279,12 @@ const ServicesPage: React.FC = () => {
                       alt={service.title}
                       className="w-full h-32 object-cover"
                     />
-                    <button className="absolute top-2 right-2 p-1.5 bg-white rounded-full shadow-md hover:bg-gray-50 transition-colors">
-                      <button
-                        className="absolute top-2 right-2 p-1.5 bg-white rounded-full shadow-md hover:bg-gray-50 transition-colors"
-                        onClick={() => handleToggleFavorite(service.id)}
-                        aria-label={service.isFavorite ? 'Remove from favorites' : 'Add to favorites'}
-                      >
-                        <Heart className={`w-4 h-4 ${service.isFavorite ? 'text-red-500 fill-current' : 'text-gray-400'}`} />
-                      </button>
+                    <button
+                      className="absolute top-2 right-2 p-1.5 bg-white rounded-full shadow-md hover:bg-gray-50 transition-colors"
+                      onClick={(e) => { e.stopPropagation(); handleToggleFavorite(service.id); }}
+                      aria-label={service.isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+                    >
+                      <Heart className={`w-4 h-4 ${service.isFavorite ? 'text-red-500 fill-current' : 'text-gray-400'}`} />
                     </button>
                   </div>
                   <div className="flex-1 p-4">
