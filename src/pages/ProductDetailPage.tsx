@@ -1,6 +1,8 @@
 import React from 'react';
+import { Bookmark } from 'lucide-react';
+import { useBookmarks } from '../context/BookmarkContext';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import marketplaceData from './MarketplacePage';
+
 
 
 // Helper: get all mock listings from MarketplacePage (for similar ads)
@@ -77,14 +79,23 @@ function getAllMarketplaceListings() {
 }
 
 const ProductDetailPage: React.FC = () => {
+
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const location = useLocation();
   const product = location.state?.product;
 
+
+
+  // Bookmarks context
+  const { isBookmarked, addBookmark, removeBookmark } = useBookmarks();
+
+
   // fallback: find product by id if not in state
   const allListings = getAllMarketplaceListings();
+
   const mainProduct = product || allListings.find(p => p.id === id);
+  const saved = mainProduct ? isBookmarked(mainProduct.id) : false;
 
   if (!mainProduct) {
     return (
@@ -99,11 +110,12 @@ const ProductDetailPage: React.FC = () => {
   // Similar ads: same category, not this product
   const similarAds = allListings.filter(p => p.category === mainProduct.category && p.id !== mainProduct.id).slice(0, 4);
 
+
   return (
     <div className="max-w-6xl mx-auto py-10 px-2 md:px-8">
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Main product section */}
-        <div className="flex-1 bg-white rounded-xl shadow-lg p-8">
+  <div className="flex-1 bg-white rounded-xl shadow-lg p-8">
           <div className="flex flex-col md:flex-row gap-8">
             <div className="flex flex-col items-center md:items-start w-full md:w-96">
               <img src={mainProduct.image} alt={mainProduct.title} className="w-full h-96 object-cover rounded-lg mb-4" />
@@ -125,18 +137,19 @@ const ProductDetailPage: React.FC = () => {
                   </div>
                 </div>
                 <div className="border-t my-3" />
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-pink-600 text-xl">&#128222;</span>
-                  <span className="font-semibold">0776XXXXXX</span>
-                  <span className="text-gray-500 text-xs ml-2">Click to show phone number</span>
-                </div>
-                <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-2 rounded">
-                  <span className="text-purple-400 text-xl">&#128172;</span>
-                  <span className="font-semibold">Chat</span>
-                </div>
-                <div className="flex items-center gap-2 mb-2 cursor-pointer hover:bg-gray-50 p-2 rounded">
-                  <span className="text-green-500 text-xl">&#128994;</span>
-                  <span className="font-semibold">WhatsApp</span>
+                <div className="flex flex-col gap-4 mt-2">
+                  <div className="flex items-center gap-3">
+                    <span className="text-pink-600 text-2xl">&#128222;</span>
+                    <span className="font-semibold">0776XXXXXX</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="text-purple-400 text-2xl">&#128172;</span>
+                    <span className="font-semibold">Chat</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="text-green-500 text-2xl">&#128994;</span>
+                    <span className="font-semibold">WhatsApp</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -149,6 +162,27 @@ const ProductDetailPage: React.FC = () => {
                 <div className="mb-2"><span className="font-semibold">Location:</span> {mainProduct.location}</div>
                 <div className="mb-2"><span className="font-semibold">Posted:</span> {mainProduct.postedDate}</div>
                 <div className="mb-4"><span className="font-semibold">Category:</span> {mainProduct.category}</div>
+
+                {/* Save/Remove Button */}
+                <div className="mt-6">
+                  {mainProduct && saved ? (
+                      <button
+                        className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white font-semibold w-56 py-3 rounded-lg text-lg transition justify-center"
+                      onClick={() => removeBookmark(mainProduct.id)}
+                    >
+                      <Bookmark className="w-6 h-6" />
+                      Remove
+                    </button>
+                  ) : mainProduct ? (
+                      <button
+                        className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold w-56 py-3 rounded-lg text-lg transition justify-center"
+                      onClick={() => addBookmark(mainProduct)}
+                    >
+                      <Bookmark className="w-6 h-6" />
+                      Save
+                    </button>
+                  ) : null}
+                </div>
               </div>
             </div>
           </div>
