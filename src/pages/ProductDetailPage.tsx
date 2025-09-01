@@ -114,7 +114,7 @@ const ProductDetailPage: React.FC = () => {
                 ))}
               </div>
               {/* Seller/Contact Card moved here */}
-              <div className="bg-white border rounded-xl shadow p-6 w-full max-w-md mb-6">
+               <div className="bg-white border rounded-xl shadow p-6 w-full min-w-[600px] max-w-4xl" style={{height: 'auto'}}>
                 <div className="flex items-center gap-3 mb-2">
                   <div className="w-12 h-12 rounded-full border bg-gray-200 flex items-center justify-center text-xl font-bold text-gray-700">SI</div>
                   <div>
@@ -130,7 +130,7 @@ const ProductDetailPage: React.FC = () => {
                   <span className="font-semibold">0776XXXXXX</span>
                   <span className="text-gray-500 text-xs ml-2">Click to show phone number</span>
                 </div>
-                <div className="flex items-center gap-2 mb-2 cursor-pointer hover:bg-gray-50 p-2 rounded">
+                <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-50 p-2 rounded">
                   <span className="text-purple-400 text-xl">&#128172;</span>
                   <span className="font-semibold">Chat</span>
                 </div>
