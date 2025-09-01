@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Search, Grid, List, Bookmark, MapPin, Clock } from 'lucide-react';
 import { useBookmarks } from '../context/BookmarkContext';
+import { useNavigate } from 'react-router-dom';
 
 interface ListingItem {
   id: string;
@@ -15,6 +16,7 @@ interface ListingItem {
 }
 
 const MarketplacePage: React.FC = () => {
+  const navigate = useNavigate();
   const { isBookmarked, addBookmark, removeBookmark } = useBookmarks();
   const handleToggleBookmark = (item: ListingItem) => {
     if (isBookmarked(item.id)) removeBookmark(item.id);
@@ -207,7 +209,14 @@ const MarketplacePage: React.FC = () => {
         {viewMode === 'grid' ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredListings.map((listing) => (
-              <div key={listing.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+              <div
+                key={listing.id}
+                className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow cursor-pointer"
+                onClick={() => navigate(`/product/${listing.id}`, { state: { product: listing } })}
+                role="button"
+                tabIndex={0}
+                onKeyDown={e => { if (e.key === 'Enter') navigate(`/product/${listing.id}`, { state: { product: listing } }); }}
+              >
                 <div className="relative">
                   <img
                     src={listing.image}
@@ -216,7 +225,7 @@ const MarketplacePage: React.FC = () => {
                   />
                   <button
                     className="absolute top-3 right-3 p-2 bg-white rounded-full shadow-md hover:bg-gray-50 transition-colors"
-                    onClick={() => handleToggleBookmark(listing)}
+                    onClick={e => { e.stopPropagation(); handleToggleBookmark(listing); }}
                     aria-label={isBookmarked(listing.id) ? 'Remove bookmark' : 'Add bookmark'}
                   >
                     <Bookmark className={`w-5 h-5 ${isBookmarked(listing.id) ? 'text-blue-600 fill-current' : 'text-gray-400'}`} />

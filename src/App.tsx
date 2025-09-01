@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import ProductDetailPage from './pages/ProductDetailPage';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
@@ -43,6 +44,7 @@ function App() {
               <Route path="/about" element={<AboutPage />} />
               <Route path="/services" element={<ServicesPage />} />
               <Route path="/admin" element={<AdminPanel />} />
+              <Route path="/product/:id" element={<ProductDetailPage />} />
             </Routes>
           </main>
           <Footer />
