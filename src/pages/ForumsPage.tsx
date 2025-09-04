@@ -208,9 +208,9 @@ const ForumsPage: React.FC = () => {
                           {categories.find(cat => cat.value === post.category)?.label}
                         </span>
                       </div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-2 hover:text-blue-600 transition-colors cursor-pointer">
+                      <a href={`/forums/${post.id}`} className="text-xl font-bold text-gray-900 mb-2 hover:text-blue-600 transition-colors">
                         {post.title}
-                      </h3>
+                      </a>
                       <p className="text-gray-600 line-clamp-2 mb-3">{post.content}</p>
                       <div className="flex items-center space-x-1 text-sm text-gray-500">
                         <span>by</span>
@@ -237,10 +237,15 @@ const ForumsPage: React.FC = () => {
                         <span>{post.views} views</span>
                       </div>
                     </div>
-                    <button className="flex items-center space-x-1 text-blue-600 hover:text-blue-700 transition-colors">
-                      <Reply className="w-4 h-4" />
-                      <span>Reply</span>
-                    </button>
+                    <div className="flex items-center gap-4">
+                      <a href={`/forums/${post.id}`} className="text-blue-600 hover:text-blue-700 transition-colors font-medium">
+                        View Details
+                      </a>
+                      <button className="flex items-center space-x-1 text-blue-600 hover:text-blue-700 transition-colors">
+                        <Reply className="w-4 h-4" />
+                        <span>Reply</span>
+                      </button>
+                    </div>
                   </div>
                 </div>
               ))}

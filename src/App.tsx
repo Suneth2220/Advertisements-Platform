@@ -3,6 +3,8 @@ import ProductDetailPage from './pages/ProductDetailPage';
 import HouseDetailPage from './pages/HouseDetailPage';
 import ServicesDetailPage from './pages/ServicesDetailPage';
 import EventsDetailPage from './pages/EventsDetailPage';
+import JobDetailPage from './pages/JobDetailPage';
+import ForumDetailPage from './pages/ForumDetailPage';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
@@ -20,43 +22,48 @@ import AboutPage from './pages/AboutPage';
 import ServicesPage from './pages/ServicesPage';
 import AdminPanel from './pages/AdminPanel';
 import { UserProvider } from './context/UserContext';
+import { BookmarkProvider } from './context/BookmarkContext';
 
 import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   return (
-    <UserProvider>
-      <Router>
-        <div className="min-h-screen bg-gray-50 flex flex-col">
-          <Header />
-          {/* Scroll to top on route change */}
-          <ScrollToTop />
-          <main className="flex-1">
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/login" element={<LoginPage />} />
-              <Route path="/contact" element={<ContactPage />} />
-              <Route path="/marketplace" element={<MarketplacePage />} />
-              <Route path="/jobs" element={<JobsPage />} />
-              <Route path="/housing" element={<HousingPage />} />
-              <Route path="/forums" element={<ForumsPage />} />
-              <Route path="/events" element={<EventsPage />} />
-              <Route path="/post-ad" element={<PostAdPage />} />
-              <Route path="/account" element={<AccountPage />} />
-              <Route path="/search" element={<SearchPage />} />
-              <Route path="/about" element={<AboutPage />} />
-              <Route path="/services" element={<ServicesPage />} />
-              <Route path="/admin" element={<AdminPanel />} />
-              <Route path="/product/:id" element={<ProductDetailPage />} />
-              <Route path="/house/:id" element={<HouseDetailPage />} />
-              <Route path="/services/:id" element={<ServicesDetailPage />} />
-              <Route path="/events/:id" element={<EventsDetailPage />} />
-            </Routes>
-          </main>
-          <Footer />
-        </div>
-      </Router>
-    </UserProvider>
+    <BookmarkProvider>
+      <UserProvider>
+        <Router>
+          <div className="min-h-screen bg-gray-50 flex flex-col">
+            <Header />
+            {/* Scroll to top on route change */}
+            <ScrollToTop />
+            <main className="flex-1">
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/contact" element={<ContactPage />} />
+                <Route path="/marketplace" element={<MarketplacePage />} />
+                <Route path="/jobs" element={<JobsPage />} />
+                <Route path="/housing" element={<HousingPage />} />
+                <Route path="/forums" element={<ForumsPage />} />
+                <Route path="/events" element={<EventsPage />} />
+                <Route path="/jobs/:id" element={<JobDetailPage />} />
+                <Route path="/post-ad" element={<PostAdPage />} />
+                <Route path="/account" element={<AccountPage />} />
+                <Route path="/search" element={<SearchPage />} />
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="/forums/:id" element={<ForumDetailPage />} />
+                <Route path="/services" element={<ServicesPage />} />
+                <Route path="/admin" element={<AdminPanel />} />
+                <Route path="/product/:id" element={<ProductDetailPage />} />
+                <Route path="/house/:id" element={<HouseDetailPage />} />
+                <Route path="/services/:id" element={<ServicesDetailPage />} />
+                <Route path="/events/:id" element={<EventsDetailPage />} />
+              </Routes>
+            </main>
+            <Footer />
+          </div>
+        </Router>
+      </UserProvider>
+    </BookmarkProvider>
   );
 }
 

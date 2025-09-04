@@ -252,9 +252,9 @@ const JobsPage: React.FC = () => {
                 <button className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors font-semibold">
                   Apply Now
                 </button>
-                <button className="border border-blue-600 text-blue-600 px-6 py-2 rounded-lg hover:bg-blue-50 transition-colors font-semibold">
+                <a href={`/jobs/${job.id}`} className="border border-blue-600 text-blue-600 px-6 py-2 rounded-lg hover:bg-blue-50 transition-colors font-semibold inline-flex items-center justify-center">
                   View Details
-                </button>
+                </a>
               </div>
             </div>
           ))}
