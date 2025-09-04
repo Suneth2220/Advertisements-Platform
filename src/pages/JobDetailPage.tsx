@@ -43,8 +43,25 @@ const mockJobs: Job[] = [
 
 const JobDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const job = mockJobs.find(j => j.id === id) ?? mockJobs[0];
+  const job = mockJobs.find(j => j.id === id);
   const { isBookmarked, addBookmark, removeBookmark } = useBookmarks();
+
+  if (!job) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+          <Link to="/jobs" className="text-sm text-blue-600 hover:underline">&larr; Back to jobs</Link>
+          <div className="mt-6 bg-white rounded-xl shadow p-8 text-center">
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">Job not found</h1>
+            <p className="text-gray-600">The job you're looking for may have been removed or the link is incorrect.</p>
+            <div className="mt-6">
+              <Link to="/jobs" className="inline-block bg-blue-600 text-white px-6 py-2 rounded-lg">Browse Jobs</Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">

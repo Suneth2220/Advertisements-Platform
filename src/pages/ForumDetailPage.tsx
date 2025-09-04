@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { MessageSquare, ArrowUpCircle, ArrowDownCircle, Clock, Plus } from 'lucide-react';
 
 interface Comment {
@@ -59,8 +59,10 @@ const mockPost: Post = {
 };
 
 const ForumDetailPage: React.FC = () => {
-  const [post] = useState<Post>(mockPost);
-  const [comments, setComments] = useState<Comment[]>(post.comments);
+  const { id } = useParams<{ id: string }>();
+  const selected = id === mockPost.id ? mockPost : undefined;
+  const [post] = useState<Post | undefined>(selected);
+  const [comments, setComments] = useState<Comment[]>(post?.comments ?? []);
   const [replyText, setReplyText] = useState('');
 
   const upvoteComment = (commentId: string) => {
@@ -79,6 +81,23 @@ const ForumDetailPage: React.FC = () => {
     setComments(prev => [newComment, ...prev]);
     setReplyText('');
   };
+
+  if (!post) {
+    return (
+      <div className="min-h-screen bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <Link to="/forums" className="text-sm text-blue-600 hover:underline">&larr; Back to forums</Link>
+          <div className="mt-6 bg-white rounded-xl shadow p-8 text-center">
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">Discussion not found</h1>
+            <p className="text-gray-600">The discussion may have been removed or the link is incorrect.</p>
+            <div className="mt-6">
+              <Link to="/forums" className="inline-block bg-blue-600 text-white px-6 py-2 rounded-lg">Browse Forums</Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">

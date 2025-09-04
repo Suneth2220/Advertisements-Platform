@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { MessageSquare, Users, Clock, ThumbsUp, Reply, Plus, Search } from 'lucide-react';
 
 interface ForumPost {
@@ -208,9 +209,9 @@ const ForumsPage: React.FC = () => {
                           {categories.find(cat => cat.value === post.category)?.label}
                         </span>
                       </div>
-                      <a href={`/forums/${post.id}`} className="text-xl font-bold text-gray-900 mb-2 hover:text-blue-600 transition-colors">
+                      <Link to={`/forums/${post.id}`} className="text-xl font-bold text-gray-900 mb-2 hover:text-blue-600 transition-colors">
                         {post.title}
-                      </a>
+                      </Link>
                       <p className="text-gray-600 line-clamp-2 mb-3">{post.content}</p>
                       <div className="flex items-center space-x-1 text-sm text-gray-500">
                         <span>by</span>
@@ -238,9 +239,9 @@ const ForumsPage: React.FC = () => {
                       </div>
                     </div>
                     <div className="flex items-center gap-4">
-                      <a href={`/forums/${post.id}`} className="text-blue-600 hover:text-blue-700 transition-colors font-medium">
+                      <Link to={`/forums/${post.id}`} className="text-blue-600 hover:text-blue-700 transition-colors font-medium">
                         View Details
-                      </a>
+                      </Link>
                       <button className="flex items-center space-x-1 text-blue-600 hover:text-blue-700 transition-colors">
                         <Reply className="w-4 h-4" />
                         <span>Reply</span>
