@@ -101,10 +101,12 @@ const Header: React.FC = () => {
                 {!user?.isAdmin && (
                   <Link
                     to="/account"
-                    className="text-gray-700 hover:text-blue-600 transition-colors flex items-center space-x-1"
+                    className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors border-2 border-blue-600"
                   >
-                    <User className="w-4 h-4" />
-                    <span>{user?.name}</span>
+                    <span className="w-7 h-7 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center">
+                      <User className="w-4 h-4" />
+                    </span>
+                    <span className="font-medium">{user?.name}</span>
                   </Link>
                 )}
                 {user?.isAdmin && (
