@@ -65,8 +65,74 @@ const ForumDetailPage: React.FC = () => {
   const [comments, setComments] = useState<Comment[]>(post?.comments ?? []);
   const [replyText, setReplyText] = useState('');
 
-  const upvoteComment = (commentId: string) => {
-    setComments(prev => prev.map(c => c.id === commentId ? { ...c, votes: c.votes + 1 } : { ...c }));
+  // Voting state (one vote per user using localStorage)
+  const [postVotes, setPostVotes] = useState<number>(post?.votes ?? 0);
+  const [postVoteDirection, setPostVoteDirection] = useState<'up' | 'down' | null>(() => {
+    if (!post) return null;
+    const dir = localStorage.getItem(`vote_dir_post_${post.id}`);
+    return dir === 'up' || dir === 'down' ? dir : null;
+  });
+  const [commentVoteDirections, setCommentVoteDirections] = useState<Record<string, 'up' | 'down' | null>>(() => {
+    if (!post) return {};
+    try {
+      const raw = localStorage.getItem(`vote_dir_comments_post_${post.id}`);
+      return raw ? JSON.parse(raw) : {};
+    } catch {
+      return {};
+    }
+  });
+
+  const persistCommentVoteDirections = (next: Record<string, 'up' | 'down' | null>) => {
+    if (!post) return;
+    localStorage.setItem(`vote_dir_comments_post_${post.id}`, JSON.stringify(next));
+  };
+
+  const toggleCommentVote = (commentId: string, direction: 'up' | 'down') => {
+    const current = commentVoteDirections[commentId] ?? null;
+    let delta = 0;
+    if (current === direction) {
+      delta = direction === 'up' ? -1 : 1; // undo same vote
+      updateCommentVotes(commentId, delta);
+      const next = { ...commentVoteDirections, [commentId]: null };
+      setCommentVoteDirections(next);
+      persistCommentVoteDirections(next);
+      return;
+    }
+    if (current === null) {
+      delta = direction === 'up' ? 1 : -1;
+    } else {
+      // switching vote
+      delta = direction === 'up' ? 2 : -2;
+    }
+    updateCommentVotes(commentId, delta);
+    const next = { ...commentVoteDirections, [commentId]: direction };
+    setCommentVoteDirections(next);
+    persistCommentVoteDirections(next);
+  };
+
+  const updateCommentVotes = (commentId: string, delta: number) => {
+    setComments(prev => prev.map(c => c.id === commentId ? { ...c, votes: c.votes + delta } : { ...c }));
+  };
+
+  const voteOnPost = (direction: 'up' | 'down') => {
+    if (!post) return;
+    const current = postVoteDirection;
+    let delta = 0;
+    if (current === direction) {
+      delta = direction === 'up' ? -1 : 1; // undo
+      setPostVotes(v => v + delta);
+      setPostVoteDirection(null);
+      localStorage.setItem(`vote_dir_post_${post.id}`, '');
+      return;
+    }
+    if (current === null) {
+      delta = direction === 'up' ? 1 : -1;
+    } else {
+      delta = direction === 'up' ? 2 : -2; // switch
+    }
+    setPostVotes(v => v + delta);
+    setPostVoteDirection(direction);
+    localStorage.setItem(`vote_dir_post_${post.id}`, direction);
   };
 
   const addComment = () => {
@@ -127,12 +193,12 @@ const ForumDetailPage: React.FC = () => {
                 </div>
 
                 <div className="hidden md:flex flex-col items-center px-3">
-                  <button className="p-1 rounded hover:bg-gray-100">
-                    <ArrowUpCircle className="w-6 h-6 text-gray-500" />
+                  <button onClick={() => voteOnPost('up')} className={`p-1 rounded hover:bg-gray-100 ${postVoteDirection === 'up' ? 'text-blue-600' : ''}`}>
+                    <ArrowUpCircle className={`w-6 h-6 ${postVoteDirection === 'up' ? 'text-blue-600' : 'text-gray-500'}`} />
                   </button>
-                  <div className="text-sm font-medium my-1">{post.votes}</div>
-                  <button className="p-1 rounded hover:bg-gray-100">
-                    <ArrowDownCircle className="w-6 h-6 text-gray-500" />
+                  <div className="text-sm font-medium my-1">{postVotes}</div>
+                  <button onClick={() => voteOnPost('down')} className={`p-1 rounded hover:bg-gray-100 ${postVoteDirection === 'down' ? 'text-red-600' : ''}`}>
+                    <ArrowDownCircle className={`w-6 h-6 ${postVoteDirection === 'down' ? 'text-red-600' : 'text-gray-500'}`} />
                   </button>
                 </div>
               </div>
@@ -177,12 +243,12 @@ const ForumDetailPage: React.FC = () => {
                         </div>
                         <div className="text-sm text-gray-500 pl-4">
                           <div className="flex flex-col items-center">
-                            <button onClick={() => upvoteComment(c.id)} className="p-1 rounded hover:bg-gray-100">
-                              <ArrowUpCircle className="w-5 h-5" />
+                            <button onClick={() => toggleCommentVote(c.id, 'up')} className={`p-1 rounded hover:bg-gray-100 ${commentVoteDirections[c.id] === 'up' ? 'text-blue-600' : ''}`}>
+                              <ArrowUpCircle className={`w-5 h-5 ${commentVoteDirections[c.id] === 'up' ? 'text-blue-600' : ''}`} />
                             </button>
                             <div className="text-xs font-medium">{c.votes}</div>
-                            <button className="p-1 rounded hover:bg-gray-100">
-                              <ArrowDownCircle className="w-5 h-5" />
+                            <button onClick={() => toggleCommentVote(c.id, 'down')} className={`p-1 rounded hover:bg-gray-100 ${commentVoteDirections[c.id] === 'down' ? 'text-red-600' : ''}`}>
+                              <ArrowDownCircle className={`w-5 h-5 ${commentVoteDirections[c.id] === 'down' ? 'text-red-600' : ''}`} />
                             </button>
                           </div>
                         </div>

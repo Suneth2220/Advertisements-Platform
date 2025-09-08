@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MessageSquare, Users, Clock, ThumbsUp, Reply, Plus, Search } from 'lucide-react';
+import { MessageSquare, Users, Clock, ThumbsUp, Plus, Search } from 'lucide-react';
 
 interface ForumPost {
   id: string;
@@ -242,10 +242,6 @@ const ForumsPage: React.FC = () => {
                       <Link to={`/forums/${post.id}`} className="text-blue-600 hover:text-blue-700 transition-colors font-medium">
                         View Details
                       </Link>
-                      <button className="flex items-center space-x-1 text-blue-600 hover:text-blue-700 transition-colors">
-                        <Reply className="w-4 h-4" />
-                        <span>Reply</span>
-                      </button>
                     </div>
                   </div>
                 </div>
