@@ -107,12 +107,6 @@ const Header: React.FC = () => {
                     <span>{user?.name}</span>
                   </Link>
                 )}
-                <button
-                  onClick={handleLogout}
-                  className="text-gray-700 hover:text-red-600 transition-colors"
-                >
-                  Logout
-                </button>
                 {user?.isAdmin && (
                   <Link
                     to="/admin"

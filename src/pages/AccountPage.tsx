@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
-import { User, Settings, Heart, MessageSquare, Eye, Edit, Trash2, Plus } from 'lucide-react';
+import { User, Settings, Heart, MessageSquare, Eye, Edit, Trash2, Plus, LogOut } from 'lucide-react';
 import { useUser } from '../context/UserContext';
+import { useNavigate } from 'react-router-dom';
 
 const AccountPage: React.FC = () => {
-  const { user } = useUser();
+  const { user, logout } = useUser();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('listings');
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
 
   // Mock data for user's listings
   const userListings = [
@@ -84,21 +91,27 @@ const AccountPage: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="bg-white rounded-2xl shadow-lg p-8 mb-8">
-          <div className="flex items-center space-x-6">
-            <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
-              <User className="w-10 h-10 text-white" />
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">{user?.name}</h1>
-              <p className="text-gray-600">{user?.email}</p>
-              <div className="flex items-center space-x-4 mt-2">
-                <span className="text-sm text-gray-500">Member since Jan 2025</span>
-                <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">Verified</span>
-                {user?.isAdmin && (
-                  <span className="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs">Admin</span>
-                )}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-6">
+              <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                <User className="w-10 h-10 text-white" />
+              </div>
+              <div>
+                <h1 className="text-3xl font-bold text-gray-900">{user?.name}</h1>
+                <p className="text-gray-600">{user?.email}</p>
+                <div className="flex items-center space-x-4 mt-2">
+                  <span className="text-sm text-gray-500">Member since Jan 2025</span>
+                  <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs">Verified</span>
+                  {user?.isAdmin && (
+                    <span className="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-xs">Admin</span>
+                  )}
+                </div>
               </div>
             </div>
+            <button onClick={handleLogout} className="flex items-center space-x-2 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors">
+              <LogOut className="w-4 h-4" />
+              <span>Logout</span>
+            </button>
           </div>
         </div>
 
