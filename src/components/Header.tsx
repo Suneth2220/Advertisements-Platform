@@ -58,7 +58,7 @@ const Header: React.FC = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-6">
+          <nav className="hidden md:flex items-center space-x-3">
             <div className="relative">
               <button
                 className="p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors"
@@ -125,7 +125,7 @@ const Header: React.FC = () => {
             ) : (
               <Link
                 to="/login"
-                className="text-gray-700 hover:text-blue-600 transition-colors"
+                className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors"
               >
                 Login
               </Link>
@@ -205,7 +205,7 @@ const Header: React.FC = () => {
               ) : (
                 <Link
                   to="/login"
-                  className="block text-gray-700 hover:text-blue-600 transition-colors py-2"
+                  className="block bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors text-center"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   Login
